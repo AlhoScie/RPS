@@ -1,7 +1,6 @@
 function getComputerChoice() {
     let cComputerChoice = "";
     let nRandom = Math.floor(Math.random() * 10) % 3;
-    //console.log(cComputerChoice);
     switch(nRandom) {
         case 0: cComputerChoice = "R";
             break;
@@ -11,17 +10,7 @@ function getComputerChoice() {
             break;            
     }
 
-    /*
-    if( nRandom === 0) {
-        cComputerChoice = "R";
-    } else if ( nRandom === 1) {
-        cComputerChoice = "P";
-    } else if ( nRandom === 2) {
-        cComputerChoice = "S";
-    } else {
-        cComputerChoice = 'fishy...';
-    } */
-    console.log(cComputerChoice);
+    // console.log('Computer: ' + cComputerChoice);
     return cComputerChoice;
 }
 
@@ -32,12 +21,17 @@ function getPlayerChoice() {
 }
 
 
-function playOneTurn() {
+function playOneTurn(choice) {
     let cComp   = getComputerChoice();
-    let cPlayer = getPlayerChoice();
+    let cPlayer = choice;
     let cWinner = "";
 
-    if (cPlayer === 'R') {
+    console.log('p: ' + cPlayer);
+    console.log('c: ' + cComp);
+    //let cPlayer = getPlayerChoice();
+
+
+    if (cPlayer == 'R') {
         switch (cComp) {
             case 'R': cWinner = 'D';
                 break;
@@ -46,7 +40,7 @@ function playOneTurn() {
             case 'S': cWinner = 'P';
                 break;
         }
-    } else if (cPlayer === 'P') {
+    } else if (cPlayer == 'P') {
         switch(cComp) {
             case 'R': cWinner = 'P';
                 break;
@@ -55,7 +49,7 @@ function playOneTurn() {
             case 'S': cWinner = 'C';
                 break;
         }} 
-        else if ( cPlayer === 'S') {
+        else if ( cPlayer == 'S') {
             switch(cComp) {
                 case 'R': cWinner = 'C';
                     break;
@@ -70,10 +64,16 @@ function playOneTurn() {
 }
 
 
-function game() {
-    let scoreP = scoreC = 0;
-    for (let i=1; i<=5; i++) {
-        let result = playOneTurn();
+function game(choiceP) {
+    //let choiceP = choice;
+    console.log('choice: ' + choiceP);
+    let scoreP = 0;
+    let scoreC = 0;
+    //playOneTurn(choiceP);
+    
+    //for (let i=1; i<=5; i++) {
+    for (let i=1; i<=1; i++) {        
+        let result = playOneTurn(choiceP);
         if (result === 'P') {
             scoreP += 1; 
             }
@@ -81,7 +81,8 @@ function game() {
             scoreC += 1; 
         }
         console.log(`round: ${i} --- result  Player: ${scoreP}  --- Computer: ${scoreC}`);         
-    }
+    } 
+    
     console.log(`endresult  Player: ${scoreP}  --- Computer: ${scoreC}`);
 }
 
