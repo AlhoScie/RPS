@@ -1,5 +1,9 @@
+let nGames = 0;
+let nScorePlayer = 0;
+let nScoreComp = 0;
+
 function getComputerChoice() {
-    let cComputerChoice = "";
+    let cComputerChoice = '';
     let nRandom = Math.floor(Math.random() * 10) % 3;
     switch(nRandom) {
         case 0: cComputerChoice = "R";
@@ -10,26 +14,21 @@ function getComputerChoice() {
             break;            
     }
 
-    // console.log('Computer: ' + cComputerChoice);
+    console.log('Computer: ' + cComputerChoice);
     return cComputerChoice;
 }
 
+/*
 function getPlayerChoice() {
-
     let cPlayerChoice = prompt("R, P or S?").toUpperCase();
     return cPlayerChoice;
-}
+} */
 
 
-function playOneTurn(choice) {
+function playOneTurn(cChoice) {
     let cComp   = getComputerChoice();
-    let cPlayer = choice;
+    let cPlayer = cChoice;
     let cWinner = "";
-
-    console.log('p: ' + cPlayer);
-    console.log('c: ' + cComp);
-    //let cPlayer = getPlayerChoice();
-
 
     if (cPlayer == 'R') {
         switch (cComp) {
@@ -59,30 +58,54 @@ function playOneTurn(choice) {
                     break;
             }
     }
-    // console.log( `Player: ${cPlayer}  --- Computer: ${cComp}  --- Winner: ${cWinner}`);
+    nGames += 1;
+    let resultDiv = document.querySelector('.result');
+    let playerDiv = document.querySelector('.player');
+    let compDiv = document.querySelector('.computer');
+    
+
+    let cPlayerResult = `Player: ${cPlayer}    ---   `;
+    playerDiv.innerHTML = (cPlayerResult);
+    
+    let cCompResult = `Computer: ${cComp}`;
+    cCompResult += `  =>   winner: ${cWinner}`;
+    compDiv.innerHTML = (cCompResult);
+
+    let cResultTxt = '<br/><br/>' + `player: ${ cPlayer } ` + ' --- ' + `computer: ${cComp}`;
+    resultDiv.innerHTML = ( cResultTxt);
     return cWinner;
+
 }
 
 
-function game(choiceP) {
-    //let choiceP = choice;
-    console.log('choice: ' + choiceP);
-    let scoreP = 0;
-    let scoreC = 0;
-    //playOneTurn(choiceP);
-    
-    //for (let i=1; i<=5; i++) {
-    for (let i=1; i<=1; i++) {        
-        let result = playOneTurn(choiceP);
-        if (result === 'P') {
-            scoreP += 1; 
-            }
-        else if (result === 'C') {
-            scoreC += 1; 
+function game(cChoicePlayer) {
+
+    let cResult = playOneTurn(cChoicePlayer);
+
+    if (cResult === 'P') {
+        nScorePlayer += 1; 
         }
-        console.log(`round: ${i} --- result  Player: ${scoreP}  --- Computer: ${scoreC}`);         
-    } 
-    
-    console.log(`endresult  Player: ${scoreP}  --- Computer: ${scoreC}`);
-}
+    else if (cResult === 'C') {
+            nScoreComp += 1; 
+        }
+    let resultDiv = document.querySelector('.result');
+    cResultTxt = '<br/>' + `turn: ${nGames} ---` + ` player: ${nScorePlayer}  --- computer: ${nScoreComp}`;
+    resultDiv.innerHTML = ( cResultTxt )  ;       
 
+    if( nGames >= 5) {
+        let cWinner = 'Draw!';
+        if ( nScorePlayer > nScoreComp) {
+            cWinner = 'Player';
+        } else if (nScoreComp > nScorePlayer) {
+            cWinner = 'Computer';
+        }
+        
+        cResultTxt = cResultTxt + '<br/>' + `game-winner: ${cWinner}`;
+        resultDiv.innerHTML = ( cResultTxt )  ;      
+        nGames = 0;
+        nScoreComp = 0;
+        nScorePlayer = 0;
+    }
+    
+
+}
